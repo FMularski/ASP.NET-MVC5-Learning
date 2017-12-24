@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
+using System.Data.Entity;
 
 namespace Vidly.Controllers
 {
@@ -25,12 +26,14 @@ namespace Vidly.Controllers
 
         public ViewResult Index()
         {
-            return View(_Context.Movies.ToList());
+            var movies = _Context.Movies.Include(m => m.Genre).ToList();
+
+            return View(movies);
         }
 
         public ActionResult Details(int id)
         {
-            var movie = _Context.Movies.SingleOrDefault(m => m.Id == id);
+            var movie = _Context.Movies.Include( m => m.Genre).SingleOrDefault(m => m.Id == id);
 
             if (movie == null)
                 return HttpNotFound();
