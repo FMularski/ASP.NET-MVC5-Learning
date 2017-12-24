@@ -11,20 +11,22 @@ namespace Vidly.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Title")]
         public string Name { get; set; }
 
         public Genre Genre { get; set; }
 
         [Required]
+        [Display(Name = "Genre")]
         public byte GenreId { get; set; }
 
-        [Required]
+        [Display(Name = "Release date")]
         public string ReleaseDate { get; set; }
 
-        [Required]
-        public  string AddedDate { get; set; }
+        public string AddedDate { get; set; }
 
         [Required]
+        [Display(Name = "Number in stock")]
         public int NumberInStock { get; set; }
     }
 
