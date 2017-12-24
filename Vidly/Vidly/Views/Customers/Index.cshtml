@@ -23,7 +23,7 @@ else
     {
         <tr>
             <td>
-                @Html.ActionLink(customer.Name, "Details", new { id = customer.Id }, null)  @* null is for html attribuets such as new { @class = "cssClassName" }*@
+                @Html.ActionLink(customer.Name, "Edit", new { id = customer.Id }, null)  @* null is for html attribuets such as new { @class = "cssClassName" }*@
             </td>
             <td>
                 @customer.MembershipType.Name
