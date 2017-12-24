@@ -24,14 +24,14 @@ namespace Vidly.Controllers
 
         public ViewResult Index()
         {
-            var customers = _Context.Customers.Include( c => c.MembershipType).ToList();
+            var customers = _Context.Customers.Include( c => c.MembershipType).ToList();        //eager loading, ladowanie obiektu membershiptype w obiekcie customer
 
             return View(customers);
         }
 
         public ActionResult Details(int id)
         {
-            var customer = _Context.Customers.SingleOrDefault(c => c.Id == id);
+            var customer = _Context.Customers.Include( c => c.MembershipType).SingleOrDefault(c => c.Id == id);
 
             if (customer == null)
                 return HttpNotFound();

@@ -10,69 +10,32 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
-        //public ActionResult Edit(int id)
-        //{
-        //    return Content("id = " + id);
-        //}
+        private ApplicationDbContext _Context;
 
-        //public ActionResult Foo(int arg)
-        //{
-        //    if (arg % 2 == 0)
-        //        return RedirectToAction("Edit", "Movies", new { id = arg });
-        //    else
-        //        return Redirect("http://google.com");
-        //}
-
-        //public ActionResult Index(int? pageIndex, string sortBy)
-        //{
-        //    if (!pageIndex.HasValue) pageIndex = 1;
-        //    if (string.IsNullOrEmpty(sortBy)) sortBy = "Name";
-
-        //    return Content(string.Format("pageIndex = {0}, sortBy = {1}", pageIndex, sortBy));
-        //}
-
-        //[Route("movies/released/{year}/{month:regex(\\d{2}):range(1, 12)}")]
-        //public ActionResult ByReleaseDate( int? year, int? month)
-        //{
-        //    if (!year.HasValue) year = 2000;
-        //    if (!month.HasValue) month = 1;
-
-        //    return Content(string.Format("Date: {0}/{1}", month, year));
-        //}
-
-        //public ViewResult Random()
-        //{
-        //    var customers = new List<Customer>
-        //    {
-        //        new Customer { Name = "Customer 1"},
-        //        new Customer { Name = "Customer 2"},
-        //        new Customer { Name = "Customer 3"}
-        //    };
-
-        //    var movie = new Movie
-        //    {
-        //        Name = "The Last Jedi"
-        //    };
-
-        //    var VM = new RandomMovieViewModel
-        //    {
-        //        Movie = movie,
-        //        Customers = customers
-        //    };
-
-        //    return View(VM);
-        //}
-
-        List<Movie> Movies = new List<Movie>
+        public MoviesController()
         {
-            new Movie { Id = 1, Name = "The Force Awekening" },
-            new Movie { Id = 2, Name = "The Last Jedi"}
-        };
+            _Context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _Context.Dispose();
+        }
+
 
         public ViewResult Index()
         {
-            return View(Movies);
+            return View(_Context.Movies.ToList());
         }
 
+        public ActionResult Details(int id)
+        {
+            var movie = _Context.Movies.SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+
+            return View(movie);
+        }
     }
 }

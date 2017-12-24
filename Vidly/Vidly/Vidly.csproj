@@ -217,6 +217,34 @@
     <Compile Include="Migrations\201712211637497_PopulateMembershipTypes.Designer.cs">
       <DependentUpon>201712211637497_PopulateMembershipTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712231813254_AddMembershipTypeName.cs" />
+    <Compile Include="Migrations\201712231813254_AddMembershipTypeName.Designer.cs">
+      <DependentUpon>201712231813254_AddMembershipTypeName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712231819091_PopulateMembershipTypesName.cs" />
+    <Compile Include="Migrations\201712231819091_PopulateMembershipTypesName.Designer.cs">
+      <DependentUpon>201712231819091_PopulateMembershipTypesName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712231909022_AddBirthDateToCustomer.cs" />
+    <Compile Include="Migrations\201712231909022_AddBirthDateToCustomer.Designer.cs">
+      <DependentUpon>201712231909022_AddBirthDateToCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712231913243_AddBirthDateToCustomer1.cs" />
+    <Compile Include="Migrations\201712231913243_AddBirthDateToCustomer1.Designer.cs">
+      <DependentUpon>201712231913243_AddBirthDateToCustomer1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712231915447_SetOneBirthDate.cs" />
+    <Compile Include="Migrations\201712231915447_SetOneBirthDate.Designer.cs">
+      <DependentUpon>201712231915447_SetOneBirthDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712232353172_MovieExtented.cs" />
+    <Compile Include="Migrations\201712232353172_MovieExtented.Designer.cs">
+      <DependentUpon>201712232353172_MovieExtented.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712232353576_SetupSomeMovies.cs" />
+    <Compile Include="Migrations\201712232353576_SetupSomeMovies.Designer.cs">
+      <DependentUpon>201712232353576_SetupSomeMovies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -291,6 +319,7 @@
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Movies\Index.cshtml" />
+    <Content Include="Views\Movies\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -323,6 +352,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712211637497_PopulateMembershipTypes.resx">
       <DependentUpon>201712211637497_PopulateMembershipTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231813254_AddMembershipTypeName.resx">
+      <DependentUpon>201712231813254_AddMembershipTypeName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231819091_PopulateMembershipTypesName.resx">
+      <DependentUpon>201712231819091_PopulateMembershipTypesName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231909022_AddBirthDateToCustomer.resx">
+      <DependentUpon>201712231909022_AddBirthDateToCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231913243_AddBirthDateToCustomer1.resx">
+      <DependentUpon>201712231913243_AddBirthDateToCustomer1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231915447_SetOneBirthDate.resx">
+      <DependentUpon>201712231915447_SetOneBirthDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712232353172_MovieExtented.resx">
+      <DependentUpon>201712232353172_MovieExtented.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712232353576_SetupSomeMovies.resx">
+      <DependentUpon>201712232353576_SetupSomeMovies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
