@@ -56,7 +56,7 @@ $.extend($.fn, {
 			return;
 		}
 
-		// check if a validator for this form was already Saved
+		// check if a validator for this form was already created
 		var validator = $.data(this[0], 'validator');
 		if ( validator ) {
 			return validator;
@@ -348,7 +348,7 @@ $.extend($.validator, {
 		min: $.validator.format("Please enter a value greater than or equal to {0}.")
 	},
 	
-	autoSaveRanges: false,
+	autoCreateRanges: false,
 	
 	prototype: {
 		
@@ -741,7 +741,7 @@ $.extend($.validator, {
 				// check if we have a generated label, replace the message then
 				label.attr("generated") && label.html(message);
 			} else {
-				// Save label
+				// create label
 				label = $("<" + this.settings.errorElement + "/>")
 					.attr({"for":  this.idOrName(element), generated: true})
 					.addClass(this.settings.errorClass)
@@ -974,8 +974,8 @@ $.extend($.validator, {
 			}
 		});
 		
-		if ($.validator.autoSaveRanges) {
-			// auto-Save ranges
+		if ($.validator.autoCreateRanges) {
+			// auto-create ranges
 			if (rules.min && rules.max) {
 				rules.range = [rules.min, rules.max];
 				delete rules.min;
@@ -1022,7 +1022,7 @@ $.extend($.validator, {
 		/// The actual method implementation, returning true if an element is valid
 		/// </param>
 		/// <param name="message" type="String" optional="true">
-		/// (Optional) The default message to display for this method. Can be a function Saved by 
+		/// (Optional) The default message to display for this method. Can be a function created by 
 		/// jQuery.validator.format(value). When undefined, an already existing message is used 
 		/// (handy for localization), otherwise the field-specific messages have to be defined.
 		/// </param>

@@ -3035,7 +3035,7 @@ input[type="button"].btn-block {
   content: "\e165";
 }
 
-.glyphicon-CustomerFormViewModel:before {
+.glyphicon-save:before {
   content: "\e166";
 }
 
@@ -3043,7 +3043,7 @@ input[type="button"].btn-block {
   content: "\e167";
 }
 
-.glyphicon-CustomerFormViewModeld:before {
+.glyphicon-saved:before {
   content: "\e168";
 }
 
@@ -3063,7 +3063,7 @@ input[type="button"].btn-block {
   content: "\e172";
 }
 
-.glyphicon-floppy-CustomerFormViewModeld:before {
+.glyphicon-floppy-saved:before {
   content: "\e173";
 }
 
@@ -3071,7 +3071,7 @@ input[type="button"].btn-block {
   content: "\e174";
 }
 
-.glyphicon-floppy-CustomerFormViewModel:before {
+.glyphicon-floppy-save:before {
   content: "\e175";
 }
 

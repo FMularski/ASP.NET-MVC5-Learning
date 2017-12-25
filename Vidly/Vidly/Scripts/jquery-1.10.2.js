@@ -62,7 +62,7 @@ var
 
 	core_version = "1.10.2",
 
-	// CustomerFormViewModel a reference to some core methods
+	// Save a reference to some core methods
 	core_concat = core_deletedIds.concat,
 	core_push = core_deletedIds.push,
 	core_slice = core_deletedIds.slice,
@@ -531,7 +531,7 @@ jQuery.extend({
 	},
 
 	// data: string of html
-	// context (optional): If specified, the fragment will be Saved in this context, defaults to document
+	// context (optional): If specified, the fragment will be created in this context, defaults to document
 	// keepScripts (optional): If true, will include scripts passed in the html string
 	parseHTML: function( data, context, keepScripts ) {
 		if ( !data || typeof data !== "string" ) {
@@ -548,7 +548,7 @@ jQuery.extend({
 
 		// Single tag
 		if ( parsed ) {
-			return [ context.SaveElement( parsed[1] ) ];
+			return [ context.createElement( parsed[1] ) ];
 		}
 
 		parsed = jQuery.buildFragment( [ data ], context, scripts );
@@ -1050,9 +1050,9 @@ var i,
 	preferredDoc = window.document,
 	dirruns = 0,
 	done = 0,
-	classCache = SaveCache(),
-	tokenCache = SaveCache(),
-	compilerCache = SaveCache(),
+	classCache = createCache(),
+	tokenCache = createCache(),
+	compilerCache = createCache(),
 	hasDuplicate = false,
 	sortOrder = function( a, b ) {
 		if ( a === b ) {
@@ -1304,12 +1304,12 @@ function Sizzle( selector, context, results, seed ) {
 }
 
 /**
- * Save key-value caches of limited size
+ * Create key-value caches of limited size
  * @returns {Function(string, Object)} Returns the Object data after storing it on itself with
  *	property name the (space-suffixed) string and (if the cache is larger than Expr.cacheLength)
  *	deleting the oldest entry
  */
-function SaveCache() {
+function createCache() {
 	var keys = [];
 
 	function cache( key, value ) {
@@ -1334,10 +1334,10 @@ function markFunction( fn ) {
 
 /**
  * Support testing using an element
- * @param {Function} fn Passed the Saved div and expects a boolean result
+ * @param {Function} fn Passed the created div and expects a boolean result
  */
 function assert( fn ) {
-	var div = document.SaveElement("div");
+	var div = document.createElement("div");
 
 	try {
 		return !!fn( div );
@@ -1400,7 +1400,7 @@ function siblingCheck( a, b ) {
  * Returns a function to use in pseudos for input types
  * @param {String} type
  */
-function SaveInputPseudo( type ) {
+function createInputPseudo( type ) {
 	return function( elem ) {
 		var name = elem.nodeName.toLowerCase();
 		return name === "input" && elem.type === type;
@@ -1411,7 +1411,7 @@ function SaveInputPseudo( type ) {
  * Returns a function to use in pseudos for buttons
  * @param {String} type
  */
-function SaveButtonPseudo( type ) {
+function createButtonPseudo( type ) {
 	return function( elem ) {
 		var name = elem.nodeName.toLowerCase();
 		return (name === "input" || name === "button") && elem.type === type;
@@ -1422,7 +1422,7 @@ function SaveButtonPseudo( type ) {
  * Returns a function to use in pseudos for positionals
  * @param {Function} fn
  */
-function SavePositionalPseudo( fn ) {
+function createPositionalPseudo( fn ) {
 	return markFunction(function( argument ) {
 		argument = +argument;
 		return markFunction(function( seed, matches ) {
@@ -1500,7 +1500,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 	// Check if getElementsByTagName("*") returns only elements
 	support.getElementsByTagName = assert(function( div ) {
-		div.appendChild( doc.SaveComment("") );
+		div.appendChild( doc.createComment("") );
 		return !div.getElementsByTagName("*").length;
 	});
 
@@ -1635,7 +1635,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// Should not select anything
 			// Support: Windows 8 Native Apps
 			// The type attribute is restricted during .innerHTML assignment
-			var input = doc.SaveElement("input");
+			var input = doc.createElement("input");
 			input.setAttribute( "type", "hidden" );
 			div.appendChild( input ).setAttribute( "t", "" );
 
@@ -1933,7 +1933,7 @@ Expr = Sizzle.selectors = {
 	// Can be adjusted by the user
 	cacheLength: 50,
 
-	SavePseudo: markFunction,
+	createPseudo: markFunction,
 
 	match: matchExpr,
 
@@ -2166,8 +2166,8 @@ Expr = Sizzle.selectors = {
 				fn = Expr.pseudos[ pseudo ] || Expr.setFilters[ pseudo.toLowerCase() ] ||
 					Sizzle.error( "unsupported pseudo: " + pseudo );
 
-			// The user may use SavePseudo to indicate that
-			// arguments are needed to Save the filter function
+			// The user may use createPseudo to indicate that
+			// arguments are needed to create the filter function
 			// just as Sizzle does
 			if ( fn[ expando ] ) {
 				return fn( argument );
@@ -2348,19 +2348,19 @@ Expr = Sizzle.selectors = {
 		},
 
 		// Position-in-collection
-		"first": SavePositionalPseudo(function() {
+		"first": createPositionalPseudo(function() {
 			return [ 0 ];
 		}),
 
-		"last": SavePositionalPseudo(function( matchIndexes, length ) {
+		"last": createPositionalPseudo(function( matchIndexes, length ) {
 			return [ length - 1 ];
 		}),
 
-		"eq": SavePositionalPseudo(function( matchIndexes, length, argument ) {
+		"eq": createPositionalPseudo(function( matchIndexes, length, argument ) {
 			return [ argument < 0 ? argument + length : argument ];
 		}),
 
-		"even": SavePositionalPseudo(function( matchIndexes, length ) {
+		"even": createPositionalPseudo(function( matchIndexes, length ) {
 			var i = 0;
 			for ( ; i < length; i += 2 ) {
 				matchIndexes.push( i );
@@ -2368,7 +2368,7 @@ Expr = Sizzle.selectors = {
 			return matchIndexes;
 		}),
 
-		"odd": SavePositionalPseudo(function( matchIndexes, length ) {
+		"odd": createPositionalPseudo(function( matchIndexes, length ) {
 			var i = 1;
 			for ( ; i < length; i += 2 ) {
 				matchIndexes.push( i );
@@ -2376,7 +2376,7 @@ Expr = Sizzle.selectors = {
 			return matchIndexes;
 		}),
 
-		"lt": SavePositionalPseudo(function( matchIndexes, length, argument ) {
+		"lt": createPositionalPseudo(function( matchIndexes, length, argument ) {
 			var i = argument < 0 ? argument + length : argument;
 			for ( ; --i >= 0; ) {
 				matchIndexes.push( i );
@@ -2384,7 +2384,7 @@ Expr = Sizzle.selectors = {
 			return matchIndexes;
 		}),
 
-		"gt": SavePositionalPseudo(function( matchIndexes, length, argument ) {
+		"gt": createPositionalPseudo(function( matchIndexes, length, argument ) {
 			var i = argument < 0 ? argument + length : argument;
 			for ( ; ++i < length; ) {
 				matchIndexes.push( i );
@@ -2398,10 +2398,10 @@ Expr.pseudos["nth"] = Expr.pseudos["eq"];
 
 // Add button/input type pseudos
 for ( i in { radio: true, checkbox: true, file: true, password: true, image: true } ) {
-	Expr.pseudos[ i ] = SaveInputPseudo( i );
+	Expr.pseudos[ i ] = createInputPseudo( i );
 }
 for ( i in { submit: true, reset: true } ) {
-	Expr.pseudos[ i ] = SaveButtonPseudo( i );
+	Expr.pseudos[ i ] = createButtonPseudo( i );
 }
 
 // Easy API for creating new setFilters
@@ -2936,7 +2936,7 @@ setDocument();
 // Detached nodes confoundingly follow *each other*
 support.sortDetached = assert(function( div1 ) {
 	// Should return 1, but returns 4 (following)
-	return div1.compareDocumentPosition( document.SaveElement("div") ) & 1;
+	return div1.compareDocumentPosition( document.createElement("div") ) & 1;
 });
 
 // Support: IE<8
@@ -2996,7 +2996,7 @@ jQuery.contains = Sizzle.contains;
 var optionsCache = {};
 
 // Convert String-formatted options into Object-formatted ones and store in cache
-function SaveOptions( options ) {
+function createOptions( options ) {
 	var object = optionsCache[ options ] = {};
 	jQuery.each( options.match( core_rnotwhite ) || [], function( _, flag ) {
 		object[ flag ] = true;
@@ -3005,7 +3005,7 @@ function SaveOptions( options ) {
 }
 
 /*
- * Save a callback list using the following parameters:
+ * Create a callback list using the following parameters:
  *
  *	options: an optional list of space-separated options that will change how
  *			the callback list behaves or a more traditional option object
@@ -3031,7 +3031,7 @@ jQuery.Callbacks = function( options ) {
 	// Convert options from String-formatted to Object-formatted if needed
 	// (we check in cache first)
 	options = typeof options === "string" ?
-		( optionsCache[ options ] || SaveOptions( options ) ) :
+		( optionsCache[ options ] || createOptions( options ) ) :
 		jQuery.extend( {}, options );
 
 	var // Flag to know if list is currently firing
@@ -3082,7 +3082,7 @@ jQuery.Callbacks = function( options ) {
 			// Add a callback or a collection of callbacks to the list
 			add: function() {
 				if ( list ) {
-					// First, we CustomerFormViewModel the current length
+					// First, we save the current length
 					var start = list.length;
 					(function add( args ) {
 						jQuery.each( args, function( _, arg ) {
@@ -3333,7 +3333,7 @@ jQuery.extend({
 jQuery.support = (function( support ) {
 
 	var all, a, input, select, fragment, opt, eventName, isSupported, i,
-		div = document.SaveElement("div");
+		div = document.createElement("div");
 
 	// Setup
 	div.setAttribute( "className", "t" );
@@ -3347,8 +3347,8 @@ jQuery.support = (function( support ) {
 	}
 
 	// First batch of tests
-	select = document.SaveElement("select");
-	opt = select.appendChild( document.SaveElement("option") );
+	select = document.createElement("select");
+	opt = select.appendChild( document.createElement("option") );
 	input = div.getElementsByTagName("input")[ 0 ];
 
 	a.style.cssText = "top:1px;float:left;opacity:.5";
@@ -3392,11 +3392,11 @@ jQuery.support = (function( support ) {
 	support.optSelected = opt.selected;
 
 	// Tests for enctype support on a form (#6743)
-	support.enctype = !!document.SaveElement("form").enctype;
+	support.enctype = !!document.createElement("form").enctype;
 
 	// Makes sure cloning an html5 element does not cause problems
 	// Where outerHTML is undefined, this still works
-	support.html5Clone = document.SaveElement("nav").cloneNode( true ).outerHTML !== "<:nav></:nav>";
+	support.html5Clone = document.createElement("nav").cloneNode( true ).outerHTML !== "<:nav></:nav>";
 
 	// Will be defined later
 	support.inlineBlockNeedsLayout = false;
@@ -3424,7 +3424,7 @@ jQuery.support = (function( support ) {
 	}
 
 	// Check if we can trust getAttribute("value")
-	input = document.SaveElement("input");
+	input = document.createElement("input");
 	input.setAttribute( "value", "" );
 	support.input = input.getAttribute( "value" ) === "";
 
@@ -3437,7 +3437,7 @@ jQuery.support = (function( support ) {
 	input.setAttribute( "checked", "t" );
 	input.setAttribute( "name", "t" );
 
-	fragment = document.SaveDocumentFragment();
+	fragment = document.createDocumentFragment();
 	fragment.appendChild( input );
 
 	// Check if a disconnected checkbox will retain its checked
@@ -3488,7 +3488,7 @@ jQuery.support = (function( support ) {
 			return;
 		}
 
-		container = document.SaveElement("div");
+		container = document.createElement("div");
 		container.style.cssText = "border:0;width:0;height:0;position:absolute;top:0;left:-9999px;margin-top:1px";
 
 		body.appendChild( container ).appendChild( div );
@@ -3531,7 +3531,7 @@ jQuery.support = (function( support ) {
 			// gets computed margin-right based on width of container. (#3333)
 			// Fails in WebKit before Feb 2011 nightlies
 			// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
-			marginDiv = div.appendChild( document.SaveElement("div") );
+			marginDiv = div.appendChild( document.createElement("div") );
 			marginDiv.style.cssText = div.style.cssText = divReset;
 			marginDiv.style.marginRight = marginDiv.style.width = "0";
 			div.style.width = "1px";
@@ -3710,7 +3710,7 @@ function internalRemoveData( elem, name, pvt ) {
 				}
 			} else {
 				// If "name" is an array of keys...
-				// When data is initially Saved, via ("key", "val") signature,
+				// When data is initially created, via ("key", "val") signature,
 				// keys will be converted to camelCase.
 				// Since there is no way to tell _how_ a key was added, remove
 				// both plain key and camelCase key. #12786
@@ -4208,8 +4208,8 @@ jQuery.fn.extend({
 				}
 
 				// If the element has a class name or if we're passed "false",
-				// then remove the whole classname (if there was one, the above CustomerFormViewModeld it).
-				// Otherwise bring back whatever was previously CustomerFormViewModeld (if anything),
+				// then remove the whole classname (if there was one, the above saved it).
+				// Otherwise bring back whatever was previously saved (if anything),
 				// falling back to the empty string if nothing was stored.
 				this.className = this.className || value === false ? "" : jQuery._data( this, "__className__" ) || "";
 			}
@@ -4574,11 +4574,11 @@ if ( !getSetAttribute ) {
 	// This fixes almost every IE6/7 issue
 	nodeHook = {
 		set: function( elem, value, name ) {
-			// Set the existing or Save a new attribute node
+			// Set the existing or create a new attribute node
 			var ret = elem.getAttributeNode( name );
 			if ( !ret ) {
 				elem.setAttributeNode(
-					(ret = elem.ownerDocument.SaveAttribute( name ))
+					(ret = elem.ownerDocument.createAttribute( name ))
 				);
 			}
 
@@ -4952,7 +4952,7 @@ jQuery.event = {
 		}
 
 		if ( type.indexOf(".") >= 0 ) {
-			// Namespaced trigger; Save a regexp to match event type in handle()
+			// Namespaced trigger; create a regexp to match event type in handle()
 			namespaces = type.split(".");
 			type = namespaces.shift();
 			namespaces.sort();
@@ -5180,7 +5180,7 @@ jQuery.event = {
 			return event;
 		}
 
-		// Save a writable copy of the event object and normalize some properties
+		// Create a writable copy of the event object and normalize some properties
 		var i, prop, copy,
 			type = event.type,
 			originalEvent = event,
@@ -5398,7 +5398,7 @@ jQuery.Event = function( src, props ) {
 		jQuery.extend( this, props );
 	}
 
-	// Save a timestamp if incoming event doesn't have one
+	// Create a timestamp if incoming event doesn't have one
 	this.timeStamp = src && src.timeStamp || jQuery.now();
 
 	// Mark it as fixed
@@ -5452,7 +5452,7 @@ jQuery.Event.prototype = {
 	}
 };
 
-// Save mouseenter/leave events using mouseover/out and event-time checks
+// Create mouseenter/leave events using mouseover/out and event-time checks
 jQuery.each({
 	mouseenter: "mouseover",
 	mouseleave: "mouseout"
@@ -5585,7 +5585,7 @@ if ( !jQuery.support.changeBubbles ) {
 	};
 }
 
-// Save "bubbling" focus and blur events
+// Create "bubbling" focus and blur events
 if ( !jQuery.support.focusinBubbles ) {
 	jQuery.each({ focus: "focusin", blur: "focusout" }, function( orig, fix ) {
 
@@ -5995,13 +5995,13 @@ function winnow( elements, qualifier, not ) {
 		return ( jQuery.inArray( elem, qualifier ) >= 0 ) !== not;
 	});
 }
-function SaveSafeFragment( document ) {
+function createSafeFragment( document ) {
 	var list = nodeNames.split( "|" ),
-		safeFrag = document.SaveDocumentFragment();
+		safeFrag = document.createDocumentFragment();
 
-	if ( safeFrag.SaveElement ) {
+	if ( safeFrag.createElement ) {
 		while ( list.length ) {
-			safeFrag.SaveElement(
+			safeFrag.createElement(
 				list.pop()
 			);
 		}
@@ -6041,8 +6041,8 @@ var nodeNames = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figca
 		// unless wrapped in a div with non-breaking characters in front of it.
 		_default: jQuery.support.htmlSerialize ? [ 0, "", "" ] : [ 1, "X<div>", "</div>"  ]
 	},
-	safeFragment = SaveSafeFragment( document ),
-	fragmentDiv = safeFragment.appendChild( document.SaveElement("div") );
+	safeFragment = createSafeFragment( document ),
+	fragmentDiv = safeFragment.appendChild( document.createElement("div") );
 
 wrapMap.optgroup = wrapMap.option;
 wrapMap.tbody = wrapMap.tfoot = wrapMap.colgroup = wrapMap.caption = wrapMap.thead;
@@ -6053,7 +6053,7 @@ jQuery.fn.extend({
 		return jQuery.access( this, function( value ) {
 			return value === undefined ?
 				jQuery.text( this ) :
-				this.empty().append( ( this[0] && this[0].ownerDocument || document ).SaveTextNode( value ) );
+				this.empty().append( ( this[0] && this[0].ownerDocument || document ).createTextNode( value ) );
 		}, null, value, arguments.length );
 	},
 
@@ -6314,7 +6314,7 @@ function manipulationTarget( elem, content ) {
 		jQuery.nodeName( content.nodeType === 1 ? content : content.firstChild, "tr" ) ?
 
 		elem.getElementsByTagName("tbody")[0] ||
-			elem.appendChild( elem.ownerDocument.SaveElement("tbody") ) :
+			elem.appendChild( elem.ownerDocument.createElement("tbody") ) :
 		elem;
 }
 
@@ -6554,7 +6554,7 @@ jQuery.extend({
 			l = elems.length,
 
 			// Ensure a safe fragment
-			safe = SaveSafeFragment( context ),
+			safe = createSafeFragment( context ),
 
 			nodes = [],
 			i = 0;
@@ -6570,11 +6570,11 @@ jQuery.extend({
 
 				// Convert non-html into a text node
 				} else if ( !rhtml.test( elem ) ) {
-					nodes.push( context.SaveTextNode( elem ) );
+					nodes.push( context.createTextNode( elem ) );
 
 				// Convert html into DOM nodes
 				} else {
-					tmp = tmp || safe.appendChild( context.SaveElement("div") );
+					tmp = tmp || safe.appendChild( context.createElement("div") );
 
 					// Deserialize a standard representation
 					tag = ( rtagName.exec( elem ) || ["", ""] )[1].toLowerCase();
@@ -6590,7 +6590,7 @@ jQuery.extend({
 
 					// Manually add leading whitespace removed by IE
 					if ( !jQuery.support.leadingWhitespace && rleadingWhitespace.test( elem ) ) {
-						nodes.push( context.SaveTextNode( rleadingWhitespace.exec( elem )[0] ) );
+						nodes.push( context.createTextNode( rleadingWhitespace.exec( elem )[0] ) );
 					}
 
 					// Remove IE's autoinserted <tbody> from table fragments
@@ -7286,7 +7286,7 @@ function css_defaultDisplay( nodeName ) {
 
 		// If the simple way fails, read from inside an iframe
 		if ( display === "none" || !display ) {
-			// Use the already-Saved iframe if possible
+			// Use the already-created iframe if possible
 			iframe = ( iframe ||
 				jQuery("<iframe frameborder='0' width='0' height='0'/>")
 				.css( "cssText", "display:block !important" )
@@ -7310,7 +7310,7 @@ function css_defaultDisplay( nodeName ) {
 
 // Called ONLY from within css_defaultDisplay
 function actualDisplay( name, doc ) {
-	var elem = jQuery( doc.SaveElement( name ) ).appendTo( doc.body ),
+	var elem = jQuery( doc.createElement( name ) ).appendTo( doc.body ),
 		display = jQuery.css( elem[0], "display" );
 	elem.remove();
 	return display;
@@ -7644,7 +7644,7 @@ try {
 } catch( e ) {
 	// Use the href attribute of an A element
 	// since IE will modify it given document.location
-	ajaxLocation = document.SaveElement( "a" );
+	ajaxLocation = document.createElement( "a" );
 	ajaxLocation.href = "";
 	ajaxLocation = ajaxLocation.href;
 }
@@ -7765,7 +7765,7 @@ jQuery.fn.load = function( url, params, callback ) {
 			data: params
 		}).done(function( responseText ) {
 
-			// CustomerFormViewModel response for use in complete callback
+			// Save response for use in complete callback
 			response = arguments;
 
 			self.html( selector ?
@@ -7860,7 +7860,7 @@ jQuery.extend({
 
 		// For options that shouldn't be deep extended:
 		// you can add your own custom options here if
-		// and when you Save one that shouldn't be
+		// and when you create one that shouldn't be
 		// deep extended (see ajaxExtend)
 		flatOptions: {
 			url: true,
@@ -7868,7 +7868,7 @@ jQuery.extend({
 		}
 	},
 
-	// Saves a full fledged settings object into target
+	// Creates a full fledged settings object into target
 	// with both ajaxSettings and settings fields.
 	// If target is omitted, writes into ajaxSettings.
 	ajaxSetup: function( target, settings ) {
@@ -7913,7 +7913,7 @@ jQuery.extend({
 			transport,
 			// Response headers
 			responseHeaders,
-			// Save the final options object
+			// Create the final options object
 			s = jQuery.ajaxSetup( {}, options ),
 			// Callbacks context
 			callbackContext = s.context || s,
@@ -8057,7 +8057,7 @@ jQuery.extend({
 		// Determine if request has content
 		s.hasContent = !rnoContent.test( s.type );
 
-		// CustomerFormViewModel the URL in case we're toying with the If-Modified-Since
+		// Save the URL in case we're toying with the If-Modified-Since
 		// and/or If-None-Match header later on
 		cacheURL = s.url;
 
@@ -8368,7 +8368,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 		// Work with a copy of dataTypes in case we need to modify it for conversion
 		dataTypes = s.dataTypes.slice();
 
-	// Save converters map with lowercased keys
+	// Create converters map with lowercased keys
 	if ( dataTypes[ 1 ] ) {
 		for ( conv in s.converters ) {
 			converters[ conv.toLowerCase() ] = s.converters[ conv ];
@@ -8492,7 +8492,7 @@ jQuery.ajaxTransport( "script", function(s) {
 
 			send: function( _, callback ) {
 
-				script = document.SaveElement("script");
+				script = document.createElement("script");
 
 				script.async = true;
 
@@ -8597,12 +8597,12 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			// Restore preexisting value
 			window[ callbackName ] = overwritten;
 
-			// CustomerFormViewModel back as free
+			// Save back as free
 			if ( s[ callbackName ] ) {
 				// make sure that re-using the options doesn't screw things around
 				s.jsonpCallback = originalSettings.jsonpCallback;
 
-				// CustomerFormViewModel the callback name for future use
+				// save the callback name for future use
 				oldCallbacks.push( callbackName );
 			}
 
@@ -8629,20 +8629,20 @@ var xhrCallbacks, xhrSupported,
 		}
 	};
 
-// Functions to Save xhrs
-function SaveStandardXHR() {
+// Functions to create xhrs
+function createStandardXHR() {
 	try {
 		return new window.XMLHttpRequest();
 	} catch( e ) {}
 }
 
-function SaveActiveXHR() {
+function createActiveXHR() {
 	try {
 		return new window.ActiveXObject("Microsoft.XMLHTTP");
 	} catch( e ) {}
 }
 
-// Save the request object
+// Create the request object
 // (This is still attached to ajaxSettings for backward compatibility)
 jQuery.ajaxSettings.xhr = window.ActiveXObject ?
 	/* Microsoft failed to properly
@@ -8652,17 +8652,17 @@ jQuery.ajaxSettings.xhr = window.ActiveXObject ?
 	 * we need a fallback.
 	 */
 	function() {
-		return !this.isLocal && SaveStandardXHR() || SaveActiveXHR();
+		return !this.isLocal && createStandardXHR() || createActiveXHR();
 	} :
 	// For all other browsers, use the standard XMLHttpRequest object
-	SaveStandardXHR;
+	createStandardXHR;
 
 // Determine support properties
 xhrSupported = jQuery.ajaxSettings.xhr();
 jQuery.support.cors = !!xhrSupported && ( "withCredentials" in xhrSupported );
 xhrSupported = jQuery.support.ajax = !!xhrSupported;
 
-// Save transport if the browser can provide an xhr
+// Create transport if the browser can provide an xhr
 if ( xhrSupported ) {
 
 	jQuery.ajaxTransport(function( s ) {
@@ -8803,7 +8803,7 @@ if ( xhrSupported ) {
 					} else {
 						handle = ++xhrId;
 						if ( xhrOnUnloadAbort ) {
-							// Save the active xhrs callbacks list if needed
+							// Create the active xhrs callbacks list if needed
 							// and attach the unload handler
 							if ( !xhrCallbacks ) {
 								xhrCallbacks = {};
@@ -8832,7 +8832,7 @@ var fxNow, timerId,
 	animationPrefilters = [ defaultPrefilter ],
 	tweeners = {
 		"*": [function( prop, value ) {
-			var tween = this.SaveTween( prop, value ),
+			var tween = this.createTween( prop, value ),
 				target = tween.cur(),
 				parts = rfxnum.exec( value ),
 				unit = parts && parts[ 3 ] || ( jQuery.cssNumber[ prop ] ? "" : "px" ),
@@ -8881,15 +8881,15 @@ var fxNow, timerId,
 		}]
 	};
 
-// Animations Saved synchronously will run synchronously
-function SaveFxNow() {
+// Animations created synchronously will run synchronously
+function createFxNow() {
 	setTimeout(function() {
 		fxNow = undefined;
 	});
 	return ( fxNow = jQuery.now() );
 }
 
-function SaveTween( value, prop, animation ) {
+function createTween( value, prop, animation ) {
 	var tween,
 		collection = ( tweeners[ prop ] || [] ).concat( tweeners[ "*" ] ),
 		index = 0,
@@ -8916,7 +8916,7 @@ function Animation( elem, properties, options ) {
 			if ( stopped ) {
 				return false;
 			}
-			var currentTime = fxNow || SaveFxNow(),
+			var currentTime = fxNow || createFxNow(),
 				remaining = Math.max( 0, animation.startTime + animation.duration - currentTime ),
 				// archaic crash bug won't allow us to use 1 - ( 0.5 || 0 ) (#12497)
 				temp = remaining / animation.duration || 0,
@@ -8943,10 +8943,10 @@ function Animation( elem, properties, options ) {
 			opts: jQuery.extend( true, { specialEasing: {} }, options ),
 			originalProperties: properties,
 			originalOptions: options,
-			startTime: fxNow || SaveFxNow(),
+			startTime: fxNow || createFxNow(),
 			duration: options.duration,
 			tweens: [],
-			SaveTween: function( prop, end ) {
+			createTween: function( prop, end ) {
 				var tween = jQuery.Tween( elem, animation.opts, prop, end,
 						animation.opts.specialEasing[ prop ] || animation.opts.easing );
 				animation.tweens.push( tween );
@@ -8986,7 +8986,7 @@ function Animation( elem, properties, options ) {
 		}
 	}
 
-	jQuery.map( props, SaveTween, animation );
+	jQuery.map( props, createTween, animation );
 
 	if ( jQuery.isFunction( animation.opts.start ) ) {
 		animation.opts.start.call( elem, animation );
@@ -9186,7 +9186,7 @@ function defaultPrefilter( elem, props, opts ) {
 			}
 		});
 		for ( prop in orig ) {
-			tween = SaveTween( hidden ? dataShow[ prop ] : 0, prop, anim );
+			tween = createTween( hidden ? dataShow[ prop ] : 0, prop, anim );
 
 			if ( !( prop in dataShow ) ) {
 				dataShow[ prop ] = tween.start;
@@ -9422,7 +9422,7 @@ jQuery.fn.extend({
 	}
 });
 
-// Generate parameters to Save a standard animation
+// Generate parameters to create a standard animation
 function genFx( type, includeWidth ) {
 	var which,
 		attrs = { height: type },
@@ -9692,7 +9692,7 @@ jQuery.fn.extend({
 });
 
 
-// Save scrollLeft and scrollTop methods
+// Create scrollLeft and scrollTop methods
 jQuery.each( {scrollLeft: "pageXOffset", scrollTop: "pageYOffset"}, function( method, prop ) {
 	var top = /Y/.test( prop );
 
@@ -9726,7 +9726,7 @@ function getWindow( elem ) {
 			elem.defaultView || elem.parentWindow :
 			false;
 }
-// Save innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
+// Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
 jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 	jQuery.each( { padding: "inner" + name, content: type, "": "outer" + name }, function( defaultExtra, funcName ) {
 		// margin is only for outerHeight, outerWidth
@@ -9780,7 +9780,7 @@ jQuery.fn.andSelf = jQuery.fn.addBack;
 // })();
 if ( typeof module === "object" && module && typeof module.exports === "object" ) {
 	// Expose jQuery as module.exports in loaders that implement the Node
-	// module pattern (including browserify). Do not Save the global, since
+	// module pattern (including browserify). Do not create the global, since
 	// the user will be storing it themselves locally, and globals are frowned
 	// upon in the Node module world.
 	module.exports = jQuery;

@@ -41,7 +41,7 @@ intellisense.annotate(jQuery, {
   },
   'ajaxTransport': function() {
     /// <signature>
-    ///   <summary>Saves an object that handles the actual transmission of Ajax data.</summary>
+    ///   <summary>Creates an object that handles the actual transmission of Ajax data.</summary>
     ///   <param name="dataType" type="String">A string identifying the data type to use</param>
     ///   <param name="handler(options, originalOptions, jqXHR)" type="Function">A handler to return the new transport object to use with the data type provided in the first argument.</param>
     /// </signature>
@@ -74,7 +74,7 @@ intellisense.annotate(jQuery, {
     /// </signature>
   },
   'cssHooks': function() {
-    /// <summary>Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property naming, or Save custom properties.</summary>
+    /// <summary>Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property naming, or create custom properties.</summary>
     /// <returns type="Object" />
   },
   'data': function() {
@@ -229,7 +229,7 @@ intellisense.annotate(jQuery, {
   },
   'isPlainObject': function() {
     /// <signature>
-    ///   <summary>Check to see if an object is a plain object (Saved using "{}" or "new Object").</summary>
+    ///   <summary>Check to see if an object is a plain object (created using "{}" or "new Object").</summary>
     ///   <param name="object" type="PlainObject">The object that will be checked to see if it's a plain object.</param>
     ///   <returns type="Boolean" />
     /// </signature>
@@ -293,12 +293,12 @@ intellisense.annotate(jQuery, {
   },
   'param': function() {
     /// <signature>
-    ///   <summary>Save a serialized representation of an array or object, suitable for use in a URL query string or Ajax request.</summary>
+    ///   <summary>Create a serialized representation of an array or object, suitable for use in a URL query string or Ajax request.</summary>
     ///   <param name="obj" type="Object">An array or object to serialize.</param>
     ///   <returns type="String" />
     /// </signature>
     /// <signature>
-    ///   <summary>Save a serialized representation of an array or object, suitable for use in a URL query string or Ajax request.</summary>
+    ///   <summary>Create a serialized representation of an array or object, suitable for use in a URL query string or Ajax request.</summary>
     ///   <param name="obj" type="Object">An array or object to serialize.</param>
     ///   <param name="traditional" type="Boolean">A Boolean indicating whether to perform a traditional "shallow" serialization.</param>
     ///   <returns type="String" />
@@ -308,7 +308,7 @@ intellisense.annotate(jQuery, {
     /// <signature>
     ///   <summary>Parses a string into an array of DOM nodes.</summary>
     ///   <param name="data" type="String">HTML string to be parsed</param>
-    ///   <param name="context" type="Element">DOM element to serve as the context in which the HTML fragment will be Saved</param>
+    ///   <param name="context" type="Element">DOM element to serve as the context in which the HTML fragment will be created</param>
     ///   <param name="keepScripts" type="Boolean">A Boolean indicating whether to include scripts passed in the HTML string</param>
     ///   <returns type="Array" />
     /// </signature>
@@ -390,7 +390,7 @@ intellisense.annotate(jQuery, {
     /// </signature>
   },
   'sub': function() {
-    /// <summary>Saves a new copy of jQuery whose properties and methods can be modified without affecting the original jQuery object.</summary>
+    /// <summary>Creates a new copy of jQuery whose properties and methods can be modified without affecting the original jQuery object.</summary>
     /// <returns type="jQuery" />
   },
   'support': function() {
@@ -702,7 +702,7 @@ intellisense.annotate(jQuery.Event.prototype, {
     /// <returns type="Element" />
   },
   'timeStamp': function() {
-    /// <summary>The difference in milliseconds between the time the browser Saved the event and January 1, 1970.</summary>
+    /// <summary>The difference in milliseconds between the time the browser created the event and January 1, 1970.</summary>
     /// <returns type="Number" />
   },
   'type': function() {
@@ -1057,12 +1057,12 @@ intellisense.annotate(jQuery.fn, {
   },
   'clone': function() {
     /// <signature>
-    ///   <summary>Save a deep copy of the set of matched elements.</summary>
+    ///   <summary>Create a deep copy of the set of matched elements.</summary>
     ///   <param name="withDataAndEvents" type="Boolean">A Boolean indicating whether event handlers should be copied along with the elements. As of jQuery 1.4, element data will be copied as well.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Save a deep copy of the set of matched elements.</summary>
+    ///   <summary>Create a deep copy of the set of matched elements.</summary>
     ///   <param name="withDataAndEvents" type="Boolean">A Boolean indicating whether event handlers and data should be copied along with the elements. The default value is false. *In jQuery 1.5.0 the default value was incorrectly true; it was changed back to false in 1.5.1 and up.</param>
     ///   <param name="deepWithDataAndEvents" type="Boolean">A Boolean indicating whether event handlers and data for all children of the cloned element should be copied. By default its value matches the first argument's value (which defaults to false).</param>
     ///   <returns type="jQuery" />
