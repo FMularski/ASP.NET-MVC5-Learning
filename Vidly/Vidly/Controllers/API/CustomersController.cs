@@ -20,28 +20,28 @@ namespace Vidly.Controllers.API
         }
         
         //GET /api/customers
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            return Ok(_context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>));
         }
 
         //GET /api/customers/1
-        public CustomerDto GetCustomer(int id)
+        public IHttpActionResult GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customer == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                NotFound();
 
-            return Mapper.Map<Customer, CustomerDto>(customer);
+            return Ok(Mapper.Map<Customer, CustomerDto>(customer));
         }
 
         //POST /api/customers/
         [HttpPost]
-        public CustomerDto CreateCustomer (CustomerDto customerDto)
+        public IHttpActionResult CreateCustomer (CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                BadRequest();
 
             var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
 
@@ -50,7 +50,7 @@ namespace Vidly.Controllers.API
 
             customerDto.Id = customer.Id;   // customer.Id generowane automatycznie w chwili wywolania _context.Customers.Add(customer), trzeba recznie przypidac Id do customerDto
 
-            return customerDto;
+            return Created(new Uri(Request.RequestUri + "/" + customer.Id), customerDto);
         }
 
         //PUT /api/customers/1
