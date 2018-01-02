@@ -17,6 +17,8 @@ namespace Vidly.Dtos
         [Required(ErrorMessage = "Genre is required.")]
         public byte GenreId { get; set; }
 
+        public GenreDto Genre { get; set; }
+
         public DateTime DateAdded { get; set; }
 
         [Required(ErrorMessage = "Release date is required.")]
